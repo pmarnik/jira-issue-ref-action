@@ -1,0 +1,23 @@
+name: 'Add jira references'
+description: 'Add jira references'
+inputs:
+  issue-url-pattern:  # id of input
+    description: 'issue url pattern (may contain {issue_key} for substution'
+    required: true
+  repository:
+    default: ${{ github.repository }}  
+    required: true
+  pull-number:
+    default: ${{ github.event.pull_request.number }}  
+    required: true
+  repo-token:
+    required: true  
+
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  env:
+    ACTION_REPOSITORY: ${{ inputs.repository }}
+    ACTION_PULL_NUMBER: ${{ inputs.pull-number }}
+    ACTION_ISSUE_URL_PATTERN: ${{ inputs.issue-url-pattern }}
+    GITHUB_TOKEN: ${{ inputs.repo-token }}
